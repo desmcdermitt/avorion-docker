@@ -2,18 +2,32 @@ version: "2"
 
 services:
   server:
-    build: .
+    build:
+      context: .
+      args:
+        SERVER_DIR: ${CONT_SERVER_DIR}
+        STEAMCMD_DIR: ${CONT_STEAMCMD_DIR}
+        GALAXY_DIR: ${CONT_GALAXY_DIR}
+        BACKUP_DIR: ${CONT_BACKUP_DIR}
+        BACKUP_DIR: ${LOCAL_BACKUP_DIR}
+        GALAXY_NAME: ${GALAXY_NAME}
+        PORT: ${PORT}
+    environment:
+      SERVER_DIR: ${CONT_SERVER_DIR}
+      STEAMCMD_DIR: ${CONT_STEAMCMD_DIR}
+      GALAXY_DIR: ${CONT_GALAXY_DIR}
+      BACKUP_DIR: ${CONT_BACKUP_DIR}
+      BACKUP_DIR: ${LOCAL_BACKUP_DIR}
+      GALAXY_NAME: ${GALAXY_NAME}
+      PORT: ${PORT}
     tty: true
+    container_name: avorion_server
     ports:
-      - 27000:27000/udp
-      - 27000:27000/tcp
+      - ${PORT}:${PORT}/udp
+      - ${PORT}:${PORT}/tcp
       - 27003:27003/udp
       - 27020:27020/udp
       - 27021:27021/udp
     volumes:
-      - ./galaxies:/galaxies
-      - ./backups:/backups
-
-volumes:
-  galaxies:
-  backups:
+      - ${LOCAL_GALAXY_DIR}:${CONT_GALAXY_DIR}
+      - ${LOCAL_BACKUP_DIR}:${CONT_BACKUP_DIR}

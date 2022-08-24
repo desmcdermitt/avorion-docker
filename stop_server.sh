@@ -1,2 +1,3 @@
-screen -S avorion -X stuff '/save'^M
-screen -S avorion -X stuff '/stop'^M
+#!/bin/bash
+docker exec avorion_server screen -S avorion -X stuff '/save'^M
+docker exec avorion_server screen -S avorion -X stuff '/stop'^M
